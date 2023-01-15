@@ -2,8 +2,13 @@ import styles from '@/styles/Home.module.css';
 import { Typography } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
+import { StoryInput, StoryViewer } from '@components';
+import { useState } from 'react';
+import { useStoryGenerator } from '@hooks';
 
 export default function Home() {
+  const [userStoryInput, setUserStoryInput] = useState<string>('');
+  const generatedStory = useStoryGenerator({ prompt: userStoryInput });
   return (
     <>
       <Head>
@@ -16,6 +21,9 @@ export default function Home() {
         <div className={styles.center}>
           <Typography variant="h2">Storybook AI</Typography>
         </div>
+        <StoryInput onStorySubmit={setUserStoryInput} />
+
+        <StoryViewer story={generatedStory} />
       </main>
     </>
   );

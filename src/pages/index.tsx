@@ -1,5 +1,3 @@
-import styles from '@/styles/Home.module.css';
-import { Typography } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
 import { StoryInput, StoryViewer } from '@components';
@@ -17,14 +15,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.center}>
-          <Typography variant="h2">Storybook AI</Typography>
-        </div>
-        <StoryInput onStorySubmit={setUserStoryInput} />
 
-        <StoryViewer story={generatedStory} />
-      </main>
+      <StoryInput onStorySubmit={setUserStoryInput} />
+
+      <StoryViewer story={generatedStory} />
     </>
   );
 }

@@ -1,23 +1,20 @@
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { UserInput } from '../../components';
+import { StoryViewer, UserInput } from '../../components';
 import { StoryImages } from '../../components/story_images';
-import { StoryText } from '../../components/story_text';
+import { StoryText, StoryInput } from '@components';
 import { generateStoryFromText } from '../../services/story.service';
+import { useStoryGenerator } from '../../hooks';
 
 const Home = () => {
-  const [storyValue, setStoryValue] = useState<string>('A Story on ');
-  const [storyResult, setStoryResult] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [storyValue, setStoryValue] = useState<string>('');
 
-  const createStory = async () => {
-    setIsLoading(true);
-    let story = await generateStoryFromText(storyValue);
-    console.log('Story ****', story?.choices[0]?.text);
-    setStoryResult(story?.choices[0]?.text);
-    setIsLoading(false);
+  const generatedStory = useStoryGenerator({ prompt: storyValue });
+  const handleRegenerateStory = () => {
+    let tempStory = JSON.stringify(storyValue);
+    setStoryValue('');
+    setStoryValue(tempStory);
   };
-
   return (
     <Box
       sx={{
@@ -29,13 +26,20 @@ const Home = () => {
         maxWidth: '1700px',
       }}
     >
-      <Box sx={{ textAlign: 'center', width: '600px' }}>
+      <Box sx={{ textAlign: 'center', width: '900px' }}>
         <Typography variant="h2">Storybook AI</Typography>
-        <UserInput
+        {/* <UserInput
           storyValue={storyValue}
           onStoryChange={(updatedValue) => setStoryValue(updatedValue)}
-        />
-        <Button
+        /> */}
+        <Box sx={{ mt: 5 }}>
+          <StoryInput
+            onStorySubmit={setStoryValue}
+            isLoading={generatedStory.isGenerating}
+          />
+        </Box>
+
+        {/* <Button
           variant="contained"
           sx={{ mt: 2 }}
           onClick={() => createStory()}
@@ -43,11 +47,18 @@ const Home = () => {
           disabled={isLoading}
         >
           {isLoading ? 'Creating...' : 'Create Story'}
-        </Button>
+        </Button> */}
 
         <Box sx={{ mt: 5 }}>
-          <StoryText storyData={storyResult} />
-          {storyResult && <StoryImages storyResult={storyResult} />}
+          {/* <StoryText storyData={generatedStory} /> */}
+          <StoryViewer
+            story={generatedStory.story}
+            onCancel={() => {
+              setStoryValue('');
+            }}
+            onRegenerateStory={handleRegenerateStory}
+          />
+          {generatedStory && <StoryImages storyResult={generatedStory.story} />}
         </Box>
       </Box>
     </Box>

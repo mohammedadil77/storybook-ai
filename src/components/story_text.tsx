@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { WithTransition } from '../hoc/withTransition';
 
-export const StoryText = ({ storyData = 'No Story yet!' }) => {
+const StoryText = ({ storyData = 'No Story yet!' }) => {
   return (
     <Box
       sx={{
@@ -18,3 +18,5 @@ export const StoryText = ({ storyData = 'No Story yet!' }) => {
     </Box>
   );
 };
+
+export default StoryText;

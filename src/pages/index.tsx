@@ -1,6 +1,12 @@
 import Head from 'next/head';
+import Image from 'next/image';
+import { StoryInput, StoryViewer } from '@components';
+import { useState } from 'react';
+import { useStoryGenerator } from '@hooks';
 
 export default function Home() {
+  const [userStoryInput, setUserStoryInput] = useState<string>('');
+  const generatedStory = useStoryGenerator({ prompt: userStoryInput });
   return (
     <>
       <Head>
@@ -9,6 +15,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <StoryInput onStorySubmit={setUserStoryInput} />
+
+      <StoryViewer story={generatedStory} />
     </>
   );
 }

@@ -14,3 +14,13 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+.Home_main__EtNt2 {
+  justify-content: start !important;
+}

@@ -6,7 +6,6 @@ import { useStoryGenerator } from '@hooks';
 
 export default function Home() {
   const [userStoryInput, setUserStoryInput] = useState<string>('');
-  const generatedStory = useStoryGenerator({ prompt: userStoryInput });
   return (
     <>
       <Head>
@@ -16,9 +15,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <StoryInput onStorySubmit={setUserStoryInput} />
+      {/* <StoryInput onStorySubmit={setUserStoryInput} />
 
-      <StoryViewer story={generatedStory} />
+      <StoryViewer story={generatedStory} /> */}
     </>
   );
 }

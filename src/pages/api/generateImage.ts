@@ -7,11 +7,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   let openai = getOpenAiInstance();
   try {
     const response = await openai.createImage({
-      prompt: req?.body?.prompt || 'A cute baby sea otter',
-      n: req?.body?.no_of_images || 2,
-      size: '1024x1024',
+      prompt: req?.body?.prompt || 'Pikachu on snow',
+      n: req?.body?.no_of_images || 1,
+      size: '512x512',
     });
-    res.status(200).send(response.data);
+
+    let formattedResponse = {
+      prompt: req?.body?.prompt || '',
+      data: response.data,
+    };
+    res.status(200).send(formattedResponse);
     return;
   } catch (e) {
     return res.status(401).send(e);

@@ -1,8 +1,6 @@
-import { AxiosResponse } from 'axios';
-import { CreateCompletionResponse } from 'openai';
-import React, { useEffect, useState } from 'react';
-import { getOpenAiInstance } from '../helpers/getOpenAI';
 import { generateStoryFromText } from '@services';
+import { CreateCompletionResponse } from 'openai';
+import { useEffect, useState } from 'react';
 
 interface IStoryGenerator {
   prompt: string;
@@ -19,7 +17,6 @@ const useStoryGenerator = (
     try {
       if (!prompt?.length) return story;
       setIsLoading(true);
-      const openAi = getOpenAiInstance();
       const storyGenerated = (await generateStoryFromText(
         `A story about ${prompt}`,
       )) as CreateCompletionResponse;

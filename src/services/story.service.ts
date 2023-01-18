@@ -16,7 +16,7 @@ export const generateImages = async (text: string) => {
   try {
     const storyImageResponse = await axios.post('/api/generateImage', {
       prompt: text.trim(),
-      no_of_images: 3,
+      no_of_images: 1,
     });
     return storyImageResponse.data;
   } catch (err) {

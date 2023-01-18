@@ -13,7 +13,8 @@ export const StoryTextFieldStyles = {
 };
 
 export const ButtonStyles = {
-  background: '#FFF',
+  // background: '#FFF',
+  color: '#fff',
 };
 
 export const storyViewerContainerStyles = {

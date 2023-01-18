@@ -1,17 +1,16 @@
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import {
   Box,
   Button,
-  FormControl,
   InputAdornment,
-  LinearProgress,
   TextField,
   Typography,
 } from '@mui/material';
-import React, { ChangeEvent, useState } from 'react';
-import { ButtonStyles, StoryTextFieldStyles } from '@styles';
 import CircularProgress, {
   circularProgressClasses,
 } from '@mui/material/CircularProgress';
+import { ButtonStyles, StoryTextFieldStyles } from '@styles';
+import React from 'react';
 interface IStoryInput {
   onStorySubmit?: (storyKeywords: string) => void;
   isLoading?: boolean;
@@ -63,15 +62,21 @@ const StoryInput: React.FC<IStoryInput> = (props) => {
       <form onSubmit={handleFormSubmit} style={{ width: '100%' }}>
         <TextField
           fullWidth
-          placeholder="Enter keywords for your story"
+          placeholder="a titan"
           sx={StoryTextFieldStyles}
+          autoComplete="off"
           InputProps={{
             id: 'storyInput',
             endAdornment: isLoading ? (
               <CirularProgressTemplate />
             ) : (
               <InputAdornment position="end">
-                <Button sx={ButtonStyles} type="submit">
+                <Button
+                  sx={ButtonStyles}
+                  type="submit"
+                  variant="contained"
+                  endIcon={<MenuBookIcon />}
+                >
                   Generate Story
                 </Button>
               </InputAdornment>
@@ -79,7 +84,7 @@ const StoryInput: React.FC<IStoryInput> = (props) => {
             startAdornment: (
               <Typography
                 variant="body1"
-                sx={{ color: '#000', width: '176px' }}
+                sx={{ color: '#000', width: '176px', lineHeight: '1px' }}
               >
                 A story about
               </Typography>

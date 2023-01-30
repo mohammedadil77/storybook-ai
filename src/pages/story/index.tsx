@@ -54,6 +54,7 @@ const Home = () => {
           startStory={openStoryPlayer}
           onClose={() => setOpenStoryPlayer(false)}
           storyImages={storyImages}
+          story={generatedStory.story}
         />
       )}
       <Box sx={{ textAlign: 'center', width: '900px' }}>
@@ -75,7 +76,7 @@ const Home = () => {
             onRegenerateStory={handleRegenerateStory}
           />
 
-          {storyValue.length > 1 && (
+          {generatedStory?.story?.length > 1 && (
             <Box sx={{ mt: 5 }}>
               <Button
                 onClick={async () => {

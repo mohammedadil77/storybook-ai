@@ -1,5 +1,5 @@
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { Typewriter } from 'react-simple-typewriter';
 import {
   cancelStoryContainerStyles,
@@ -10,6 +10,9 @@ import {
 } from '@styles';
 import CloseIcon from '@mui/icons-material/Close';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { useStoryAudio } from '@hooks';
+import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import VoiceOverOffIcon from '@mui/icons-material/VoiceOverOff';
 
 interface IStoryViewer {
   story: string;
@@ -19,11 +22,33 @@ interface IStoryViewer {
 
 const StoryViewer: React.FC<IStoryViewer> = (props) => {
   const { story } = props;
-  if (!story?.length) return <></>;
+  const [startAudio, setStartAudio] = useState<boolean>(false);
   story?.replaceAll('\n', '.');
+
+  const handleSpeechEnd = () => setStartAudio(false);
+
+  useStoryAudio({ story, start: startAudio, onEnd: handleSpeechEnd });
+
+  if (!story?.length) return <></>;
   return (
     <Box sx={storyViewerContainerStyles}>
       <Box id="storyviewer-header" sx={storyViewerHeaderStyles}>
+        <Tooltip
+          title={startAudio ? 'Stop story audio' : 'Listen to story'}
+          arrow
+        >
+          <IconButton
+            onClick={() => {
+              setStartAudio((prev) => !prev);
+            }}
+          >
+            {startAudio ? (
+              <VoiceOverOffIcon sx={{ color: '#FFF', fontSize: '18px' }} />
+            ) : (
+              <RecordVoiceOverIcon sx={{ color: '#FFF', fontSize: '18px' }} />
+            )}
+          </IconButton>
+        </Tooltip>
         <Tooltip title={'Regenerate story'} arrow>
           <IconButton
             sx={regenerateStoryContainerStyles}
@@ -48,8 +73,6 @@ const StoryViewer: React.FC<IStoryViewer> = (props) => {
             typeSpeed={30}
             deleteSpeed={0}
             delaySpeed={1000}
-            //   onLoopDone={handleDone}
-            //   onType={handleType}
           />
         </Typography>
       </Box>

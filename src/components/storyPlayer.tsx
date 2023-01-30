@@ -15,11 +15,13 @@ import { useState } from 'react';
 import { Fade } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import { useStoryAudio } from '@hooks';
 
 interface IStoryPlayer {
   startStory?: boolean;
   onClose?: () => void;
   storyImages?: string[];
+  story?: string;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -32,7 +34,9 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export const StoryPlayer: React.FC<IStoryPlayer> = (props) => {
-  let { startStory = false, onClose, storyImages = [] } = props;
+  let { startStory = false, onClose, storyImages = [], story } = props;
+
+  // useStoryAudio({ story });
 
   const [bookMode, setBookMode] = useState(false);
 
@@ -54,11 +58,12 @@ export const StoryPlayer: React.FC<IStoryPlayer> = (props) => {
                   key={i}
                   style={{ marginTop: '20px' }}
                 >
-                  <img src={imageData?.url} alt="StoryImage" />
-                  <Typography
-                    variant="h2"
-                    sx={{ fontWeight: 700, mt: '100px' }}
-                  >
+                  <img
+                    src={imageData?.url}
+                    alt="StoryImage"
+                    className="story-image"
+                  />
+                  <Typography variant="h4" sx={{ fontWeight: 700 }}>
                     {`"${imageData?.prompt}" `}
                   </Typography>
                 </div>
